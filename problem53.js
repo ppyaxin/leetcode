@@ -2,6 +2,7 @@
  * @param {number[]} nums
  * @return {number}
  */
+// https://leetcode-cn.com/problems/maximum-subarray/
 var maxSubArray = function(nums) {
     let res = nums[0];
     let sum = 0;
