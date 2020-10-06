@@ -1,0 +1,25 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+    let subString = new Set()
+    let maxLength = 0
+    let start = 0
+    for (let i = 0; i < s.length; i++) {
+        if (!subString.has(s[i])) {
+            subString.add(s[i])
+        } else {
+            while (s[start] != s[i]) {
+                //开始指针向右移动时候的要删除集合里对应的元素
+                subString.delete(s[start])
+                start++
+            }
+            start++
+        }
+        maxLength=Math.max(maxLength,i-start+1)
+    }
+    return maxLength
+};
+
+console.log(lengthOfLongestSubstring("bbbbbb"))
