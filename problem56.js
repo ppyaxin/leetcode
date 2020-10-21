@@ -2,6 +2,7 @@
  * @param {number[][]} intervals
  * @return {number[][]}
  */
+// https://leetcode-cn.com/problems/merge-intervals/
 var merge = function (intervals) {
     //根据每个数组元素的第一个值进行排序
     function sortNum(a, b) {
