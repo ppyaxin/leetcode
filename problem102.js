@@ -5,6 +5,7 @@ function TreeNode(val, left, right) {
 }
 //层次遍历
 var levelOrder = function(root) {
+    if(!root) return []
     let res=[]
     let queue=[]
     queue.push(root)
@@ -15,38 +16,41 @@ var levelOrder = function(root) {
             let temp=queue.shift()
             res[res.length-1].push(temp.val)
             console.log(res)
-            if(temp.left.val){
-                queue.push(temp.left)
-            } 
-            if(temp.right.val) queue.push(temp.right)
+            if(temp.left)  queue.push(temp.left)
+            if(temp.right) queue.push(temp.right)
         }
     }
     return res
 };
 //给一个数组建立一个树
-var makeTree=function(array){
-    let queue=[]
-    let root=new TreeNode(array[0])
-    let count=1
+var makeTree = function (array) {
+    let queue = []
+    let root = new TreeNode(array[0])
+    let count = 1
     queue.push(root)
-    while(count<array.length-1){
-        let left=new TreeNode(array[count])
-        let right=new TreeNode(array[count+1])
-        let temp=queue.shift()
-        temp.left=left
-        temp.right=right
-        queue.push(left)
-        queue.push(right)
-        count+=2
+    while (count < array.length - 1) {
+        let temp = queue.shift()
+        if (array[count]) {
+            let left = new TreeNode(array[count])
+            temp.left = left
+            queue.push(left)
+        }
+        if (array[count + 1]) {
+            let right = new TreeNode(array[count + 1])
+            temp.right = right
+            queue.push(right)
+        }
+        count += 2
     }
-    if(count==array.length-1){
-        let left=new TreeNode(array[count])
-        let temp=queue.shift()
-        temp.left=left
+    if (count == array.length - 1) {
+        let left = new TreeNode(array[count])
+        let temp = queue.shift()
+        temp.left = left
     }
     return root
- };
- let tree=makeTree([3,9,20,null,null,15,7])
+};
+
+ let tree=makeTree([])
  console.log(tree)
  console.log(levelOrder(tree))
  
