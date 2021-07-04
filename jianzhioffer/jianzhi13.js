@@ -5,44 +5,47 @@
  * @return {number}
  */
 var movingCount = function (m, n, k) {
-    let board =new Array()
-    for (let i = 0; i < m; i++) {
-        board[i]=new Array()
-        for (let j = 0; j < n; j++) {
-            board[i][j] = 1
-        }
+  let board = new Array(m * n).fill(false);
+
+  let maxSize = Math.max(m, n);
+  let sum = new Array(maxSize);
+  for (let i = 0; i < maxSize; i++) {
+    sum[i] = getSum(i);
+  }
+  function dfs(x, y) {
+    //出界不能走
+    if (x < 0 || y < 0 || x >= m || y >= n) {
+      return 0;
     }
-    console.log(board)
-    
-    let count = 0
-    function dfs(x, y) {
-        if (x < 0 || y < 0 || x >= m || y >= n) {
-            return
-        }
-        let sum =getSum(x)+getSum(y)
-        if (sum > k) {
-            return
-        }
-        if (board[x][y] == 1) {
-            count = count + 1
-            board[x][y] = 0
-        }
-        dfs(x - 1, y)
-        dfs(x + 1, y)
-        dfs(x, y + 1)
-        dfs(x, y - 1)
+    //走过的不能走
+    let i = x * n + y;
+    if (board[i]) {
+      return 0;
     }
-    dfs(0, 0, 0)
-    return count
+    board[i] = true;
+    //数位和大于k不能走
+    if (sum[x] + sum[y] > k) {
+      return 0;
+    }
+
+    //可以走，标记走过了
+    return 1 + dfs(x - 1, y) + dfs(x + 1, y) + dfs(x, y + 1) + dfs(x, y - 1);
+  }
+  return dfs(0, 0);
 };
 
 function getSum(x) {
-    let sum = 0
-    while (x > 0) {
-        sum = sum + x % 10
-        x =parseInt(x / 10) 
-    }
-   return sum
+  let sum = 0;
+  while (x > 0) {
+    sum = sum + (x % 10);
+    x = parseInt(x / 10);
+  }
+  return sum;
 }
-console.log(getSum(2))
-console.log(movingCount(2,3,1))
+
+function main() {
+  console.log(getSum(2345));
+  console.log(movingCount(3, 1, 0));
+}
+
+main();
