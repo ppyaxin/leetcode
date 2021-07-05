@@ -23,3 +23,4 @@ var exchange = function (nums) {
     return nums
 };
 console.log(exchange([11,9,3,7,16,4,2,0]))
+
